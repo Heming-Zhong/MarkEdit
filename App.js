@@ -68,9 +68,9 @@ const App: () => React$Node = () => {
                 Read the docs to discover what to do next:
                     </Text>
             </View> */}
-            <View style={{ height: 700, width: 700 ,overflow:'hidden'}}>
+            <View style={{ height: 700, width: 1280 ,overflow:'hidden'}}>
               <WebView 
-                style={{ height: 700, width: 700 }}
+                style={{ height: 700, width: 1280 }}
                 scrollEnabled={false}
                 javaScriptEnabled={true}  
                 // injectedJavaScript={'插入到h5页面中的js代码'}

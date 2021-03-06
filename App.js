@@ -6,7 +6,10 @@
  * @flow strict-local
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +17,7 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
 } from 'react-native';
 
 import Vditor from 'vditor';
@@ -28,10 +32,35 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
+    </View>
+  );
+}
+
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
 const App: () => React$Node = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
+      {/* <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -43,48 +72,21 @@ const App: () => React$Node = () => {
             </View>
           )}
           <View style={styles.body}>
-            {/* <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                      screen and then come back to see your edits.
-                    </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-                    </Text>
-            </View> */}
+            {}
             <View style={{ height: 700, width: 1280 ,overflow:'hidden'}}>
               <WebView 
                 style={{ height: 700, width: 1280 }}
                 scrollEnabled={false}
                 javaScriptEnabled={true}  
-                // injectedJavaScript={'插入到h5页面中的js代码'}
                 onMessage={event => {console.log('接收h5页面传过来的消息')}}
                 source={{uri: 'file:///android_asset/vditor/src/test.html'}}
-                // source={{ html: '<h1>Hello world</h1>' }}
-              >
+                >
               </WebView>
             </View>
-            {/* <LearnMoreLinks /> */}
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </>
+      </SafeAreaView> */}
+    </NavigationContainer>
   );
 };
 
@@ -128,3 +130,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+

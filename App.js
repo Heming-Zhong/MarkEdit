@@ -53,39 +53,48 @@ function NotificationsScreen({ navigation }) {
 
 const Drawer = createDrawerNavigator();
 
+// const source = Platform.OS === 'ios' ? {uri: 'static.bundle/vditor/src/test.html'} : {uri:'file:///android_asset/vditor/src/test.html'};
+let source = (Platform.OS === 'android' ? 'file:///android_asset/' : '') + `static.bundle/vditor/src/test.html`;
+
+function EditorScreen({ navigation }) {
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.scrollView}>
+      {/* <Header /> */}
+      {global.HermesInternal == null ? null : (
+        <View style={styles.engine}>
+          <Text style={styles.footer}>Engine: Hermes</Text>
+        </View>
+      )}
+      <View style={styles.body}>
+        <View style={{ height: 700, width: 1280 ,overflow:'hidden'}}>
+          <WebView 
+            style={{ height: 700, width: 1280 }}
+            originWhitelist={['*']}
+            scrollEnabled={false}
+            allowFileAccess={true}
+            allowingReadAccessToURL="*"
+            javaScriptEnabled={true}  
+            onMessage={event => {console.log('接收h5页面传过来的消息')}}
+            // source={{uri: 'file:///android_asset/vditor/src/test.html'}}
+            source={{uri: source}}
+            >
+          </WebView>
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Editor" component={EditorScreen} />
       </Drawer.Navigator>
-      {/* <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            {}
-            <View style={{ height: 700, width: 1280 ,overflow:'hidden'}}>
-              <WebView 
-                style={{ height: 700, width: 1280 }}
-                scrollEnabled={false}
-                javaScriptEnabled={true}  
-                onMessage={event => {console.log('接收h5页面传过来的消息')}}
-                source={{uri: 'file:///android_asset/vditor/src/test.html'}}
-                >
-              </WebView>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView> */}
     </NavigationContainer>
   );
 };

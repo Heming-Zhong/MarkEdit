@@ -91,6 +91,8 @@ const App: () => React$Node = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
+        {/* TODO: Openfile */}
+        {/* TODO: Bookmark */}
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
         <Drawer.Screen name="Editor" component={EditorScreen} />
